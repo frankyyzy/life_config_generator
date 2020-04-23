@@ -43,16 +43,6 @@ class PokemonCanvas extends Component {
       this.dot_flag = false;
       this.cells = Create2DArray(this.state.rows, this.state.cols);
     }
-
-    clearCells(){
-        this.cells = Create2DArray(this.state.rows, this.state.cols);
-      
-        let {width, height,rows, cols} = this.state;
-        let cv = this.cvRef.current;
-        let ctx = cv.getContext('2d');
-
-        ctx.clearRect(0, 0, width, height);
-    }
   
     /**
      * Render the initial layout of the canvas and set the default values upon mount
@@ -76,76 +66,28 @@ class PokemonCanvas extends Component {
        let {width, height,rows, cols} = this.state;
         let cv = this.cvRef.current;
         let ctx = cv.getContext('2d');
-        // ctx.beginPath();
-        // ctx.moveTo(this.prevX, this.prevY);
-        // ctx.lineTo(this.currX, this.currY);
-        // ctx.strokeStyle = x;
-        // ctx.lineWidth = y;
-        // ctx.stroke();
-        // ctx.closePath();
+        ctx.beginPath();
+        ctx.moveTo(this.prevX, this.prevY);
+        ctx.lineTo(this.currX, this.currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
 
 
- 
-        let incSteps = 100;
+       
+        let incSteps = 10;
         let xStart = Math.min(this.prevX, this.currX);
         let xEnd = Math.max(this.prevX, this.currX);
         let xStep = (xEnd - xStart) / incSteps;
         let yStart = Math.min(this.prevY, this.currY);
         let yEnd = Math.max(this.prevY, this.currY);
         let yStep = (yEnd - yStart) / incSteps;
-
-        if (this.prevX < this.currX){
-            if (this.prevY < this.currY){
-                let j = yStart;
-                for (let i = xStart ; i < xEnd + xStep; i += xStep, j+= yStep){
-                        this.cells[ Math.floor(j / width * cols)][Math.floor(i / height * rows)] = 1;
-                }
-
-            } else { 
-                let j = yEnd;
-                for (let i = xStart ; i < xEnd + xStep; i += xStep, j-= yStep){
-                 
-                             this.cells[ Math.floor(j / width * cols)][Math.floor(i / height * rows)] = 1;
-                    
-                }
-            } 
-
-        } else if (this.prevX > this.currX){
-            if (this.prevY < this.currY){
-                let j = yStart;
-                for (let i = xEnd ; i > xStart + xStep; i -= xStep, j+= yStep){
-                        this.cells[ Math.floor(j / width * cols)][Math.floor(i / height * rows)] = 1;
-                }
-
-            } else{
-                let j = yEnd;
-                for (let i = xEnd ; i > xStart - xStep; i -= xStep, j-= yStep){
-                 
-                             this.cells[ Math.floor(j / width * cols)][Math.floor(i / height * rows)] = 1;
-                    
-                }
+        for (let i = xStart; i < xEnd; i += xStep){
+            for (let j = yStart; j < yEnd; j += yStep){
+                this.cells[ Math.floor(j / width * cols)][Math.floor(i / height * rows)] = 1;
             }
-
-             
-        } else { // x is the same
-            if (this.prevY < this.currY){
-    
-                for (let j = yStart ; j < yEnd + yStep; j+= yStep){
-                    this.cells[ Math.floor(j / width * cols)][Math.floor(xStart / height * rows)] = 1;
-                }
-
-            } else if (this.prevY > this.currY){
-                for (let j = yEnd ; j > yStart - yStep; j-= yStep){
-                    this.cells[ Math.floor(j / width * cols)][Math.floor(xStart / height * rows)] = 1;
-                }
-
-            }
-
-
         }
-
- 
-       
 
         let config = rows + " " + cols + "\n";
         let r,c;
@@ -243,9 +185,7 @@ class PokemonCanvas extends Component {
         //   <BlockPageScroll>
         <div className="wave-viewer">
       <div> rows:{this.state.rows}&nbsp;
-            cols:{this.state.cols} &nbsp;
-      <button onClick={e => this.clearCells()}>clear</button>
-            
+            cols:{this.state.cols} 
       </div>
             <canvas
               style = {{
