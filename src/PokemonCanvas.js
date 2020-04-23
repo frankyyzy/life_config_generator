@@ -240,7 +240,7 @@ class PokemonCanvas extends Component {
     render() {
 
       return (
-          <BlockPageScroll>
+
         <div className="wave-viewer">
       <div> rows:{this.state.rows}&nbsp;
             cols:{this.state.cols} &nbsp;
@@ -277,7 +277,6 @@ class PokemonCanvas extends Component {
           </textarea>
    
         </div>
-            </BlockPageScroll>
       );
     }
   }
