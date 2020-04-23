@@ -240,13 +240,13 @@ class PokemonCanvas extends Component {
     render() {
 
       return (
+          <BlockPageScroll>
         <div className="wave-viewer">
       <div> rows:{this.state.rows}&nbsp;
             cols:{this.state.cols} &nbsp;
       <button onClick={e => this.clearCells()}>clear</button>
             
       </div>
-          <BlockPageScroll>
             <canvas
               style = {{
                 position: 'relative',
@@ -264,7 +264,6 @@ class PokemonCanvas extends Component {
               onMouseOut={e => this.mouseout(e)}
             ></canvas>
 
-</BlockPageScroll>
             <textarea  
             style = {{
                 position: 'relative',
@@ -278,6 +277,7 @@ class PokemonCanvas extends Component {
           </textarea>
    
         </div>
+            </BlockPageScroll>
       );
     }
   }
